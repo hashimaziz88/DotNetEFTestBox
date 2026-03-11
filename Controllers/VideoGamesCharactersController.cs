@@ -1,4 +1,5 @@
-﻿using DotNetEFTestBox.Models;
+﻿using DotNetEFTestBox.Dtos;
+using DotNetEFTestBox.Models;
 using DotNetEFTestBox.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,11 @@ namespace DotNetEFTestBox.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<List<Character>>> GetCharacters()
+        public async Task<ActionResult<List<CharacterResponse>>> GetCharacters()
             => Ok(await service.GetAllCharactersAsync());
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacter(int id)
+        public async Task<ActionResult<CharacterResponse>> GetCharacter(int id)
         {
             var character = await service.GetCharacterByIdAsync(id);
             if (character is null)

@@ -1,9 +1,7 @@
-﻿namespace DotNetEFTestBox.Models
+﻿namespace DotNetEFTestBox.Dtos
 {
-    public class Character
+    public class CharacterResponse
     {
-        public int Id { get; set; }
-
         public string Name { get; set; } = string.Empty;
 
         public string Game { get; set; } = string.Empty;

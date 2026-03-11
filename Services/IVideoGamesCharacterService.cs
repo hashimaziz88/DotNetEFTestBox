@@ -1,15 +1,15 @@
-﻿using DotNetEFTestBox.Models;
+﻿using DotNetEFTestBox.Dtos;
+using DotNetEFTestBox.Models;
 
 namespace DotNetEFTestBox.Services
 {
     public interface IVideoGamesCharacterService
     {
-        Task<List<Character>> GetAllCharactersAsync();
+        Task<List<CharacterResponse>> GetAllCharactersAsync();
 
-        Task<Character?> GetCharacterByIdAsync(int id);
+        Task<CharacterResponse?> GetCharacterByIdAsync(int id);
 
-        Task<Character> AddCharacterAsync(Character character);
-
+        Task<CharacterResponse> AddCharacterAsync(Character character);
         Task<bool> UpdateCharacterAsync(int id, Character character);
 
         Task<bool> DeleteCharacterAsync(int id);

@@ -1,17 +1,15 @@
-﻿using DotNetEFTestBox.Models;
+﻿using DotNetEFTestBox.Data;
+using DotNetEFTestBox.Dtos;
+using DotNetEFTestBox.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotNetEFTestBox.Services
 {
-    public class VideoGameCharacterService : IVideoGamesCharacterService
+    public class VideoGameCharacterService (AppDbContext context) : IVideoGamesCharacterService
     {
-        static List<Character> characters = new List<Character>
-        {
-            new Character { Id = 1, Name = "Mario", Game = "Super Mario", Role = "Hero" },
-            new Character { Id = 2, Name = "Link", Game = "The Legend of Zelda", Role = "Hero" },
-            new Character { Id = 3, Name = "Bowser", Game = "Super Mario", Role = "Villain" },
-        };
+        private readonly AppDbContext _context = context;
 
-        public async Task<Character> AddCharacterAsync(Character character)
+        public async Task<CharacterResponse> AddCharacterAsync(Character character)
         {
             throw new NotImplementedException();
         }
@@ -21,13 +19,25 @@ namespace DotNetEFTestBox.Services
             throw new NotImplementedException();
         }
 
-        public async Task<List<Character>> GetAllCharactersAsync()
-            => await Task.FromResult(characters);
+        public async Task<List<CharacterResponse>> GetAllCharactersAsync()
+            => await _context.Characters.Select(c => new CharacterResponse
+            {
+                Name = c.Name,
+                Game = c.Game,
+                Role = c.Role
+            }).ToListAsync();
 
-        public async Task<Character?> GetCharacterByIdAsync(int id)
+        public async Task<CharacterResponse?> GetCharacterByIdAsync(int id)
         {
-            var result = characters.FirstOrDefault(c => c.Id == id);
-            return await Task.FromResult(result);
+            var result = await _context.Characters
+                .Where(c => c.Id == id)
+                .Select(c => new CharacterResponse
+                {
+                    Name = c.Name,
+                    Game = c.Game,
+                    Role = c.Role
+                }).FirstOrDefaultAsync();
+            return result;
         }
 
         public async Task<bool> UpdateCharacterAsync(int id, Character character)
