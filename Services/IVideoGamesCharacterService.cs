@@ -6,7 +6,7 @@ namespace DotNetEFTestBox.Services
     {
         Task<List<Character>> GetAllCharactersAsync();
 
-        Task<Character> GetCharacterByIdAsync(int id);
+        Task<Character?> GetCharacterByIdAsync(int id);
 
         Task<Character> AddCharacterAsync(Character character);
 

@@ -13,8 +13,17 @@ namespace DotNetEFTestBox.Controllers
 
 
         [HttpGet]
-
         public async Task<ActionResult<List<Character>>> GetCharacters()
             => Ok(await service.GetAllCharactersAsync());
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Character>> GetCharacter(int id)
+        {
+            var character = await service.GetCharacterByIdAsync(id);
+            if (character is null)
+                return NotFound("Character with given Id not found");
+            return Ok(character);
+
+        }
     }
 }

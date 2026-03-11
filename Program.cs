@@ -1,4 +1,5 @@
 using DotNetEFTestBox.Services;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options => { 
         options.SwaggerEndpoint("/openapi/v1.json", "Dotnet 10 Web API Sample");
     });
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

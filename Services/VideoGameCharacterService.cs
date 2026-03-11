@@ -22,13 +22,12 @@ namespace DotNetEFTestBox.Services
         }
 
         public async Task<List<Character>> GetAllCharactersAsync()
-        {
-            return await Task.FromResult(characters);
-        }
+            => await Task.FromResult(characters);
 
-        public async Task<Character> GetCharacterByIdAsync(int id)
+        public async Task<Character?> GetCharacterByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = characters.FirstOrDefault(c => c.Id == id);
+            return await Task.FromResult(result);
         }
 
         public async Task<bool> UpdateCharacterAsync(int id, Character character)
